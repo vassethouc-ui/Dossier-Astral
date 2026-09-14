@@ -1,0 +1,436 @@
+/* === SHIPS-EFFECTS.CSS — vaisseaux, effets moteur/furtivité/cargo, responsive mobile === */
+
+.spaceship.satellite .solar-panel-left {
+  right: calc(100% - 2px);
+  transform-origin: right center;
+}
+
+.spaceship.satellite .solar-panel-right {
+  left: calc(100% - 2px);
+  transform-origin: left center;
+}
+
+.spaceship.satellite.panels-deploy .solar-panel-left,
+.spaceship.satellite.panels-deploy .solar-panel-right {
+  transform: translateY(-50%) scaleX(1);
+}
+
+.spaceship.satellite .ship-body::before {
+  top: 3px;
+  right: 3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.spaceship.satellite .ship-body::after {
+  position: absolute;
+  top: -7px;
+  right: -4px;
+  width: 1px;
+  height: 8px;
+  content: "";
+  background: var(--vaisseau-couleur);
+  box-shadow: 0 -2px 0 1px var(--vaisseau-couleur);
+  transform: rotate(25deg);
+}
+
+.spaceship.satellite .ship-wings {
+  left: -3px;
+  width: 31px;
+  height: 9px;
+  border: 1px solid #8bc7ff;
+  background: repeating-linear-gradient(90deg, #164d87 0 3px, #4d9bd8 3px 4px);
+  box-shadow: 0 0 4px #3b9dff;
+  transform: translateY(-50%);
+}
+
+.spaceship.satellite .ship-wings::before,
+.spaceship.satellite .ship-wings::after {
+  position: absolute;
+  top: -1px;
+  width: 9px;
+  height: 9px;
+  content: "";
+  border: 1px solid #8bc7ff;
+  background: repeating-linear-gradient(90deg, #164d87 0 3px, #4d9bd8 3px 4px);
+}
+
+.spaceship.satellite .ship-wings::before {
+  left: -10px;
+}
+
+.spaceship.satellite .ship-wings::after {
+  right: -10px;
+}
+
+.spaceship.furtif .ship-body {
+  width: 30px;
+  height: 5px;
+  border: 1px solid var(--vaisseau-couleur);
+  background: #111722;
+  clip-path: polygon(0 50%, 25% 0, 100% 0, 76% 50%, 100% 100%, 25% 100%);
+  box-shadow: 0 0 5px var(--vaisseau-couleur);
+}
+
+.spaceship.furtif .ship-wings {
+  left: 3px;
+  width: 26px;
+  height: 22px;
+  border: 1px solid var(--vaisseau-couleur);
+  background: #0a0e18;
+  clip-path: polygon(0 50%, 100% 0, 75% 50%, 100% 100%);
+  filter: drop-shadow(0 0 3px var(--vaisseau-couleur));
+}
+
+.spaceship.cargo {
+  width: 38px;
+  height: 32px;
+}
+
+.spaceship.cargo .ship-body {
+  width: 31px;
+  height: 20px;
+  right: 0;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #657283, #202a39);
+  box-shadow: inset 0 0 0 2px var(--vaisseau-couleur), 0 0 10px var(--vaisseau-couleur);
+}
+
+.spaceship.cargo .ship-wings {
+  left: 1px;
+  width: 13px;
+  height: 26px;
+  border: 0;
+  background: var(--vaisseau-couleur);
+  clip-path: polygon(0 0, 100% 18%, 100% 82%, 0 100%);
+  filter: drop-shadow(0 0 4px var(--vaisseau-couleur));
+}
+
+.spaceship.cargo .ship-fire {
+  width: 16px;
+  height: 12px;
+  transform: translateY(-50%) scaleX(1.4);
+}
+
+.ship-body::before {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  width: 8px;
+  height: 7px;
+  content: "";
+  border: 1px solid #c9f4ff;
+  border-radius: 70% 80% 70% 25%;
+  background: linear-gradient(135deg, #d9fbff, #3198c8 55%, #123b68);
+  box-shadow: inset 3px 2px 4px #ffffffbb;
+  transform: rotate(-8deg);
+}
+
+.ship-wings {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 18px;
+  height: 18px;
+  border-top: 4px solid #4c5d70;
+  border-bottom: 4px solid #293747;
+  clip-path: polygon(0 50%, 100% 0, 82% 50%, 100% 100%);
+  transform: translateY(-50%);
+}
+
+.ship-fire {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 10px;
+  height: 6px;
+  border-radius: 50% 0 0 50%;
+  background: linear-gradient(90deg, #ff2412, #ff8a00 50%, #fff59a);
+  filter: blur(1px);
+  opacity: .45;
+  transform: translateY(-50%) scaleX(.7);
+  transform-origin: right center;
+  animation: flicker .18s ease-in-out infinite alternate;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.ship-headlight {
+  position: absolute;
+  right: -42px;
+  width: 45px;
+  height: 7px;
+  border-radius: 0 50% 50% 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, .52), transparent);
+  filter: blur(2px);
+  opacity: 0;
+  transform-origin: left center;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.headlight-top {
+  top: 6px;
+  transform: rotate(-7deg);
+}
+
+.headlight-bottom {
+  top: 15px;
+  transform: rotate(7deg);
+}
+
+.spaceship.headlights-on .ship-headlight {
+  opacity: 1;
+}
+
+.spaceship.is-moving .ship-fire {
+  opacity: 1;
+  transform: translateY(-50%) scaleX(1.8);
+}
+
+.spaceship.solar-shield::after {
+  position: absolute;
+  inset: -9px;
+  content: "";
+  border: 2px solid #72f5ff;
+  border-radius: 50%;
+  background: rgba(40, 220, 255, .12);
+  box-shadow: 0 0 8px #72f5ff, 0 0 18px #00bcd4, inset 0 0 10px #72f5ff;
+  animation: shield-pulse .45s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.spaceship.solar-orbit {
+  transition: transform .25s ease;
+  animation: solarOrbit .55s linear infinite;
+}
+
+.spaceship.is-arriving {
+  transition: transform .18s ease;
+  transform: translate(-50%, -50%) rotate(var(--ship-angle)) scale(1.2);
+}
+
+.spaceship.is-entering {
+  transform: translate(-50%, -50%) rotate(var(--ship-angle)) scale(0);
+  opacity: 0;
+  transition: transform .18s ease, opacity .18s ease;
+  transition-delay: .08s;
+}
+
+.spaceship.is-returning {
+  transition: all 3.5s cubic-bezier(.25, 1, .5, 1);
+}
+
+.spaceship.is-departing {
+  transform: translate(-50%, -50%) rotate(var(--ship-angle)) scale(.8);
+  opacity: .25;
+}
+
+@keyframes flicker {
+  from { filter: blur(1px) brightness(.9); }
+  to { filter: blur(2px) brightness(1.6); }
+}
+
+@keyframes stars-blink {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes sweep {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radar-blip {
+  50% { opacity: .45; }
+}
+
+@keyframes led-blink {
+  50% {
+    opacity: .35;
+    box-shadow: 0 0 3px #ff0000;
+  }
+
+}
+
+@keyframes blink {
+  50% { opacity: .45; }
+}
+
+body.focus-mode .configuration,
+body.focus-mode .realistic-btn,
+body.focus-mode .solar-system {
+  visibility: hidden;
+}
+
+body.focus-mode .details-card {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  width: min(300px, calc(100vw - 40px));
+  margin: 0;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+body.focus-mode .astral-dossier.hidden {
+  display: flex !important;
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+body.focus-mode .return-system {
+  display: inline-block;
+}
+
+@keyframes planetRotate {
+  from { background-position: 0% center; }
+  to { background-position: 200% center; }
+}
+
+@keyframes moonOrbit {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spinRing {
+  to {
+    transform: translate(-50%, -50%) skewX(-20deg) rotateX(75deg) rotate(342deg);
+  }
+}
+
+@keyframes orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes sun-pulse {
+  50% { box-shadow: 0 0 36px 14px #ffb52dbb; }
+}
+
+@keyframes solarFlames {
+  from { transform: scale(.94) rotate(-3deg); border-radius: 47% 53% 58% 42% / 54% 45% 55% 46%; }
+  to { transform: scale(1.08) rotate(4deg); border-radius: 58% 42% 46% 54% / 43% 57% 45% 55%; }
+}
+
+@keyframes shield-pulse {
+  to { opacity: .62; transform: scale(1.08); }
+}
+
+@keyframes solarOrbit {
+  to { transform: translate(-50%, -50%) rotate(calc(var(--ship-angle) + 360deg)) scale(1.08); }
+}
+
+@media (max-width: 650px) {
+  .configuration {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .config-field {
+    min-width: 0;
+  }
+
+  .details-card {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    width: min(250px, calc(100vw - 24px));
+    padding: 14px 16px;
+  }
+}
+
+/* Écrans bas (ex. téléphone en mode paysage) : panneau plus compact, moins de scroll nécessaire */
+@media (max-height: 420px) and (orientation: landscape) {
+  .astral-dossier {
+    top: 10px;
+    bottom: 10px;
+    right: 10px;
+    width: min(260px, calc(100vw - 20px));
+    padding: 12px 14px;
+  }
+
+  .details-card h2 {
+    margin: 6px 0 8px;
+    font-size: 1.3rem;
+  }
+
+  .details-kicker {
+    font-size: 0.6rem;
+  }
+
+  #body-description {
+    font-size: 0.78rem;
+    margin: 0 0 8px;
+  }
+
+  .special-analysis {
+    margin-top: 8px;
+    padding: 6px 8px;
+  }
+
+  .facts {
+    margin-top: 8px;
+  }
+
+  .return-system {
+    margin-top: 10px;
+    padding: 7px 10px;
+  }
+}
+
+/* --- Écran de rotation (mobile portrait uniquement) --- */
+#rotate-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: radial-gradient(circle at 50% 40%, #0d1730, #01030a 80%);
+  color: #d7e6ff;
+  text-align: center;
+  padding: 32px;
+}
+
+#rotate-overlay .rotate-icon {
+  font-size: 48px;
+  animation: rotate-hint 1.6s ease-in-out infinite;
+}
+
+#rotate-overlay p {
+  max-width: 260px;
+  font-size: 15px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+@keyframes rotate-hint {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+
+/* Cible uniquement les écrans tactiles étroits en portrait (téléphones), pas les fenêtres desktop redimensionnées */
+@media (orientation: portrait) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+  #rotate-overlay {
+    display: flex;
+  }
+
+  body > *:not(#rotate-overlay) {
+    display: none;
+  }
+}

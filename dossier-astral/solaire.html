@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dossier Astral</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/planets-orbits.css" />
+    <link rel="stylesheet" href="css/dossier-ui.css" />
+    <link rel="stylesheet" href="css/ships-effects.css" />
+  </head>
+  <body>
+    <div id="stars" aria-hidden="true"></div>
+    <div id="stars2" aria-hidden="true"></div>
+    <div id="stars3" aria-hidden="true"></div>
+    <div id="space-radar" aria-label="Radar de suivi spatial">
+      <div class="radar-grid" aria-hidden="true"></div>
+      <div class="radar-sweep" aria-hidden="true"></div>
+      <div class="radar-blip" aria-hidden="true"></div>
+      <div class="radar-status" aria-live="polite">RADAR
+STABLE</div>
+    </div>
+
+    <header id="ship-menu" class="configuration" aria-label="Configuration du vaisseau">
+      <div class="config-field">
+        <label for="ship-type">Type de vaisseau</label>
+        <select id="ship-type">
+          <option value="explorateur">Explorateur</option>
+          <option value="chasseur">Chasseur</option>
+          <option value="satellite">Satellite</option>
+          <option value="furtif">Furtif</option>
+          <option value="cargo">Cargo</option>
+        </select>
+      </div>
+
+      <div class="config-field">
+        <label for="ship-color">Couleur</label>
+        <select id="ship-color">
+          <option value="red">Rouge</option>
+          <option value="blue">Bleu</option>
+          <option value="violet">Violet</option>
+          <option value="gold">Doré</option>
+          <option value="vert-neon">Vert néon</option>
+          <option value="violet-plasma">Violet plasma</option>
+          <option value="blanc-nasa">Blanc NASA</option>
+        </select>
+      </div>
+      <button id="coolant-btn" type="button" class="coolant-btn hidden">Système de refroidissement [OFF]</button>
+    </header>
+
+    <button id="realistic-btn" type="button" class="realistic-btn" aria-pressed="false">🔭 Vue réaliste</button>
+
+    <div class="space-station" aria-label="Spatioport">
+      <div class="station-ring">
+        <span class="station-label">SPATIOPORT</span>
+        <div class="station-led" aria-label="Station disponible"></div>
+        <div class="station-dock" aria-label="Quai d'embarquement"></div>
+      </div>
+    </div>
+
+    <main class="solar-system" aria-label="Système solaire interactif">
+      <div class="sun" tabindex="0" aria-label="Soleil" data-body="sun">
+        <span class="planet-name">Soleil</span>
+      </div>
+
+      <div class="orbit-container orbit-mercury">
+        <div class="planet mercury" tabindex="0" aria-label="Mercure" data-body="mercury">
+          <span class="planet-name">Mercure</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-venus">
+        <div class="planet venus" tabindex="0" aria-label="Vénus" data-body="venus">
+          <span class="planet-name">Vénus</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-earth">
+        <div class="planet earth" tabindex="0" aria-label="Terre" data-body="earth">
+          <div class="moon-orbit" aria-hidden="true">
+            <div class="moon" tabindex="-1" aria-label="Lune">
+              <span class="moon-name">Lune</span>
+            </div>
+          </div>
+          <span class="planet-name">Terre</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-mars">
+        <div class="planet mars" tabindex="0" aria-label="Mars" data-body="mars">
+          <span class="planet-name">Mars</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-jupiter">
+        <div class="planet jupiter" tabindex="0" aria-label="Jupiter" data-body="jupiter">
+          <span class="planet-name">Jupiter</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-saturn">
+        <div class="planet saturn" tabindex="0" aria-label="Saturne" data-body="saturn">
+          <div class="rings" aria-hidden="true"></div>
+          <span class="planet-name">Saturne</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-uranus">
+        <div class="planet uranus" tabindex="0" aria-label="Uranus" data-body="uranus">
+          <span class="planet-name">Uranus</span>
+        </div>
+      </div>
+
+      <div class="orbit-container orbit-neptune">
+        <div class="planet neptune" tabindex="0" aria-label="Neptune" data-body="neptune">
+          <span class="planet-name">Neptune</span>
+        </div>
+      </div>
+    </main>
+
+    <div class="focus-layer" aria-hidden="true"></div>
+
+    <div id="hud-loader" class="hidden" aria-live="polite">
+      <div class="hud-text">APPROCHE EN COURS...</div>
+      <div class="hud-bar">
+        <div class="hud-progress"></div>
+      </div>
+    </div>
+
+    <aside id="astral-dossier" class="details-card astral-dossier hidden" aria-live="polite" aria-hidden="true">
+      <div class="scan-line" aria-hidden="true"></div>
+      <p class="details-kicker">DOSSIER ASTRAL</p>
+      <h2 id="body-name">Soleil</h2>
+      <p id="body-description">Le cœur incandescent du système solaire.</p>
+
+      <section id="satellite-analysis" class="special-analysis hidden" aria-live="polite">
+        <p class="special-analysis-label">[DONNÉES SPECTROMÉTRIQUES DE LA SONDE]</p>
+        <p id="spectrometry-data"></p>
+      </section>
+      <section id="explorer-analysis" class="special-analysis hidden" aria-live="polite">
+        <p class="special-analysis-label">[SITES D'INTÉRÊT RECOMMANDÉS]</p>
+        <p id="surface-sites"></p>
+      </section>
+      <section id="cargo-analysis" class="special-analysis hidden" aria-live="polite">
+        <p class="special-analysis-label">[RESSOURCES EXPLOITABLES DÉTECTÉES]</p>
+        <p id="cargo-resources"></p>
+      </section>
+
+      <dl class="facts">
+        <div>
+          <dt>Type</dt>
+          <dd id="body-type">Étoile</dd>
+        </div>
+        <div>
+          <dt id="body-stat-label">Température</dt>
+          <dd id="body-stat">5 500 °C</dd>
+        </div>
+      </dl>
+      <p class="astral-feature-label">CARACTÉRISTIQUE</p>
+      <p id="body-feature" class="astral-feature"></p>
+      <section id="human-comparison" class="special-analysis" aria-live="polite">
+        <p class="special-analysis-label">[SI TU ÉTAIS LÀ]</p>
+        <p id="comparison-weight"></p>
+        <p id="comparison-day"></p>
+      </section>
+      <button class="return-system" type="button">Retour au spatioport</button>
+    </aside>
+
+    <div id="rotate-overlay" aria-hidden="true">
+      <div class="rotate-icon" aria-hidden="true">📱</div>
+      <p>Tourne ton téléphone pour vivre l'expérience complète</p>
+    </div>
+
+    <script src="js/dom-audio.js"></script>
+    <script src="js/planet-data.js"></script>
+    <script src="js/stats-details.js"></script>
+    <script src="js/ship-travel.js"></script>
+  </body>
+</html>

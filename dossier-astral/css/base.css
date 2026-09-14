@@ -1,0 +1,458 @@
+/* === BASE.CSS — étoiles, radar, panneau de configuration, spatioport, système solaire, orbites === */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.spaceship.chasseur.is-moving .ship-fire {
+  transform: translateY(-50%) scaleX(2);
+  filter: blur(1px);
+}
+
+:root {
+  color: #f5f7ff;
+  font-family: Arial, sans-serif;
+  background: #030611;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #151e4d 0, #070b24 42%, #02030b 100%);
+}
+
+body.focus-mode {
+  overflow: hidden;
+}
+
+#stars,
+#stars2,
+#stars3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#stars {
+  z-index: 0;
+}
+
+#stars::before,
+#stars2::before,
+#stars3::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  content: "";
+}
+
+#stars::before {
+  width: 1px;
+  height: 1px;
+  background: #fff;
+  box-shadow: 8vw 12vh #fff, 16vw 76vh #dce8ff, 24vw 32vh #fff, 31vw 88vh #fff,
+    39vw 18vh #dce8ff, 47vw 64vh #fff, 54vw 9vh #fff, 62vw 43vh #dce8ff,
+    71vw 81vh #fff, 79vw 25vh #fff, 88vw 57vh #dce8ff, 95vw 14vh #fff,
+    5vw 48vh #fff, 13vw 93vh #dce8ff, 21vw 61vh #fff, 28vw 7vh #fff,
+    36vw 52vh #dce8ff, 44vw 35vh #fff, 52vw 92vh #fff, 60vw 73vh #dce8ff,
+    68vw 16vh #fff, 76vw 69vh #fff, 84vw 39vh #dce8ff, 92vw 86vh #fff,
+    98vw 68vh #fff, 18vw 45vh #fff, 57vw 28vh #dce8ff, 73vw 5vh #fff;
+  animation: stars-blink 4s ease-in-out infinite;
+}
+
+#stars2 {
+  z-index: 0;
+}
+
+#stars2::before {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 11vw 22vh #fff, 27vw 70vh #c8e7ff, 43vw 11vh #fff,
+    58vw 58vh #fff, 74vw 34vh #c8e7ff, 89vw 78vh #fff, 3vw 84vh #fff,
+    19vw 9vh #c8e7ff, 35vw 42vh #fff, 51vw 87vh #fff, 67vw 19vh #c8e7ff,
+    83vw 53vh #fff, 97vw 31vh #fff, 8vw 63vh #c8e7ff, 48vw 76vh #fff,
+    64vw 5vh #fff, 93vw 96vh #c8e7ff;
+  filter: drop-shadow(0 0 3px #bde9ff);
+  animation: stars-blink 3s ease-in-out 1.2s infinite;
+}
+
+#stars3 {
+  z-index: 0;
+}
+
+#stars3::before {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 22vw 18vh #bde9ff, 46vw 26vh #fff, 69vw 62vh #bde9ff,
+    86vw 8vh #fff, 14vw 58vh #fff, 78vw 91vh #bde9ff, 56vw 95vh #fff;
+  filter: blur(.5px) drop-shadow(0 0 6px #9ee7ff);
+  animation: stars-blink 2s ease-in-out .4s infinite;
+}
+
+#space-radar {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 25;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border: 2px solid #55ff9b;
+  border-radius: 50%;
+  background: rgba(0, 22, 18, .72);
+  box-shadow: 0 0 12px #32ff8a88, inset 0 0 20px #32ff8a33;
+  transition: border-color .25s ease, box-shadow .25s ease, color .25s ease;
+}
+
+.radar-status {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  left: 10px;
+  z-index: 2;
+  color: #8dffba;
+  font: 700 6.5px/1.1 "Courier New", monospace;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 4px currentColor;
+  white-space: pre-line;
+  overflow: hidden;
+}
+
+#space-radar.radar-warning {
+  border-color: #ffad42;
+  color: #ffb14d;
+  box-shadow: 0 0 14px #ff7b2488, inset 0 0 22px #ff7b2433;
+  animation: glitch .18s steps(2, end) infinite;
+}
+
+#space-radar.radar-warning::before,
+#space-radar.radar-warning::after {
+  border-color: #ffad4299;
+}
+
+#space-radar.radar-warning .radar-grid {
+  border-left-color: #ffad4288;
+}
+
+#space-radar.radar-warning .radar-sweep {
+  background: linear-gradient(90deg, #ffb347, transparent);
+  box-shadow: 0 0 6px #ff8c2a;
+}
+
+#space-radar.radar-critical {
+  border-color: #ff3030;
+  color: #ff5d5d;
+  box-shadow: 0 0 18px #ff2020cc, inset 0 0 26px #ff202055;
+  animation: glitch .12s steps(2, end) infinite;
+}
+
+#space-radar.radar-critical .radar-status {
+  color: #ff5d5d;
+}
+
+@keyframes glitch {
+  0%, 100% { opacity: 1; transform: translate(0); }
+  25% { opacity: .72; transform: translate(1px, -1px); }
+  50% { opacity: .9; transform: translate(-1px, 1px); }
+  75% { opacity: .62; transform: translate(1px, 0); }
+}
+
+/* Bouton secret de refroidissement */
+.hidden {
+  display: none !important;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.coolant-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 11px 8px 25px;
+  margin-top: 10px;
+  min-height: 29px;
+  font: condensed 11px/1 "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+  letter-spacing: .04em;
+  color: #cfd6dc;
+  background: #111;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: none;
+}
+
+.coolant-btn::before {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: 6px;
+  height: 6px;
+  content: "";
+  border-radius: 50%;
+  background: #5b2020;
+  box-shadow: inset 0 0 2px #000;
+  transform: translateY(-50%);
+}
+
+.coolant-btn.active {
+  background: linear-gradient(180deg, #172a31, #111);
+  color: #cfeef6;
+  border-color: #4199a7;
+  box-shadow: 0 0 8px rgba(14,165,183,.25), inset 0 0 6px rgba(14,165,183,.1);
+}
+
+.coolant-btn.active::before {
+  background: #54edff;
+  box-shadow: 0 0 7px #00d9ff;
+}
+
+.coolant-btn.not-needed {
+  opacity: .55;
+  color: #9caab4;
+  border-color: #59636b;
+  cursor: not-allowed;
+}
+
+.coolant-btn.not-needed::before {
+  background: #71808a;
+  box-shadow: none;
+}
+
+/* Crash / écran d'échec */
+.crash-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 2, 2, 0.7);
+  z-index: 200;
+}
+
+.crash-card {
+  width: min(640px, 90%);
+  background: linear-gradient(180deg, #150000, #2b0000);
+  border: 2px solid #ff3b3b;
+  padding: 22px;
+  border-radius: 10px;
+  color: #ffdede;
+  box-shadow: 0 10px 30px rgba(255,50,50,0.18), inset 0 0 30px rgba(255,20,20,0.06);
+}
+
+.crash-card h3 {
+  margin: 0 0 10px 0;
+  color: #ffb3b3;
+}
+
+.crash-card p {
+  margin: 0 0 18px 0;
+  line-height: 1.4;
+}
+
+.crash-card .retry-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #111213;
+  color: #ffdede;
+  border: 1px solid #444;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.crash-explosion {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 50% 40%, rgba(255,180,0,0.9) 0, rgba(255,40,0,0.75) 30%, rgba(120,10,10,0.5) 60%, transparent 100%);
+  box-shadow: 0 0 60px rgba(255,80,0,0.65), 0 0 120px rgba(255,30,0,0.45);
+  z-index: 201;
+  pointer-events: none;
+  animation: crash-pulse 0.9s ease-out forwards;
+}
+
+@keyframes crash-pulse {
+  0% { transform: translate(-50%, -50%) scale(.2); opacity: 0.9; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* Ship shaking during failed approach */
+.spaceship.is-shaking {
+  animation: ship-shake 0.36s ease-in-out infinite;
+}
+@keyframes ship-shake {
+  0% { transform: translate(-50%, -50%) rotate(var(--ship-angle)) translateX(0); }
+  25% { transform: translate(-50%, -50%) rotate(calc(var(--ship-angle))) translateX(-6px); }
+  50% { transform: translate(-50%, -50%) rotate(calc(var(--ship-angle))) translateX(6px); }
+  75% { transform: translate(-50%, -50%) rotate(calc(var(--ship-angle))) translateX(-4px); }
+  100% { transform: translate(-50%, -50%) rotate(var(--ship-angle)) translateX(0); }
+}
+
+#space-radar::before,
+#space-radar::after,
+.radar-grid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid #55ff9b66;
+  border-radius: 50%;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+#space-radar::before {
+  width: 72%;
+  height: 72%;
+}
+
+#space-radar::after {
+  width: 42%;
+  height: 42%;
+}
+
+.radar-grid {
+  width: 1px;
+  height: 100%;
+  border: 0;
+  border-left: 1px solid #55ff9b55;
+  border-radius: 0;
+}
+
+.radar-grid::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 120px;
+  border-top: 1px solid #55ff9b55;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #55ff9b, transparent);
+  box-shadow: 0 0 5px #55ff9b;
+  animation: sweep 4s linear infinite;
+}
+
+.radar-blip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px #55ff9b;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: left .08s linear, top .08s linear;
+}
+
+.radar-blip.is-active {
+  opacity: 1;
+  animation: radar-blip 1s ease-in-out infinite;
+}
+
+#space-radar[aria-hidden="true"] {
+  visibility: hidden;
+}
+
+.configuration {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 220px;
+  max-width: 220px;
+  max-height: 180px;
+  overflow: hidden;
+  margin: 0;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  border: 1px solid #8e9fff55;
+  border-radius: 14px;
+  background: rgba(13, 20, 53, 0.85);
+  transition: max-height .5s ease;
+}
+
+#ship-menu.coolant-unlocked {
+  max-height: 230px;
+}
+
+#ship-menu .config-field,
+#ship-menu #coolant-btn {
+  flex: 0 0 auto;
+}
+
+.space-station {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 20;
+  width: 126px;
+  height: 126px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #77e9ff88;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1b3d6d99, #09132dcc 68%, #05091aee);
+  box-shadow: 0 0 18px #21c8ff77, inset 0 0 22px #4b8dff55;
+}
+
+.station-ring {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed #77e9ff99;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #77e9ff66;
+}
+
+.station-ring::before,
+.station-ring::after {
+  position: absolute;
+  content: "";
+  border: 1px solid #ffcc6a88;
+  border-radius: 50%;
+}
+
